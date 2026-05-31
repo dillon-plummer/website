@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +19,17 @@
       --accent:    #b5460f;
       --accent-lt: #e8cfc4;
       --rule:      #ccc8c0;
-      --col: 680px;
+    }
+
+    [data-theme="dark"] {
+      --ink:       #f0ece4;
+      --ink-mid:   #c2bdb5;
+      --ink-light: #7a7570;
+      --paper:     #141210;
+      --cream:     #1e1c19;
+      --accent:    #d4622a;
+      --accent-lt: #3a1f12;
+      --rule:      #2e2c28;
     }
 
     html { scroll-behavior: smooth; }
@@ -32,9 +42,9 @@
       font-size: 17px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    /* ── MASTHEAD ── */
     header {
       border-bottom: 2px solid var(--ink);
       padding: 0 clamp(24px, 6vw, 80px);
@@ -45,7 +55,8 @@
       position: sticky;
       top: 0;
       background: var(--paper);
-      z-index: 100;
+      z-index: 200;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .masthead-name {
@@ -54,6 +65,17 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink-mid);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
     }
 
     nav a {
@@ -68,7 +90,78 @@
     }
     nav a:hover { color: var(--accent); }
 
-    /* ── HERO ── */
+    .theme-btn {
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 5px 8px;
+      margin-left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+      color: var(--ink-light);
+      line-height: 1;
+    }
+    .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      display: block;
+    }
+
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 12px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink-mid);
+      border-radius: 1px;
+      transition: transform 0.25s ease, opacity 0.25s ease, background 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      padding: 24px clamp(24px, 6vw, 80px);
+      z-index: 190;
+      flex-direction: column;
+      gap: 20px;
+      transition: background 0.3s ease;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--accent); }
+
     .hero {
       padding: clamp(60px, 10vw, 120px) clamp(24px, 6vw, 80px) clamp(48px, 7vw, 80px);
       border-bottom: 1px solid var(--rule);
@@ -101,9 +194,7 @@
       color: var(--accent);
     }
 
-    .hero-right {
-      padding-bottom: 6px;
-    }
+    .hero-right { padding-bottom: 6px; }
 
     .hero-pitch {
       font-size: 18px;
@@ -137,7 +228,6 @@
     }
     .hero-meta a:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* ── SECTION WRAPPER ── */
     .section {
       padding: clamp(48px, 7vw, 88px) clamp(24px, 6vw, 80px);
       border-bottom: 1px solid var(--rule);
@@ -161,7 +251,6 @@
       background: var(--rule);
     }
 
-    /* ── PHILOSOPHY ── */
     .philosophy-text {
       font-family: 'Playfair Display', serif;
       font-size: clamp(22px, 2.8vw, 32px);
@@ -185,11 +274,7 @@
       line-height: 1.6;
     }
 
-    /* ── TIMELINE ── */
-    .timeline {
-      display: grid;
-      gap: 0;
-    }
+    .timeline { display: grid; gap: 0; }
 
     .timeline-item {
       display: grid;
@@ -201,14 +286,9 @@
       transform: translateY(16px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .timeline-item.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
 
-    .timeline-left {
-      padding-top: 3px;
-    }
+    .timeline-left { padding-top: 3px; }
 
     .timeline-dates {
       font-family: 'DM Mono', monospace;
@@ -223,8 +303,6 @@
       font-weight: 500;
       color: var(--ink-mid);
     }
-
-    .timeline-right {}
 
     .timeline-title {
       font-family: 'Playfair Display', serif;
@@ -251,7 +329,6 @@
       max-width: 560px;
     }
 
-    /* ── SKILLS ── */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -273,16 +350,34 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .skill-items {
-      font-size: 14px;
-      color: var(--ink-mid);
-      line-height: 1.8;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-    /* ── CONTACT ── */
+    .skill-items li {
+      font-size: 14px;
+      color: var(--ink-mid);
+      line-height: 1.5;
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .skill-items li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
     .contact-inner {
       display: flex;
       align-items: center;
@@ -332,7 +427,6 @@
       color: var(--ink-light);
     }
 
-    /* ── FOOTER ── */
     footer {
       padding: 24px clamp(24px, 6vw, 80px);
       display: flex;
@@ -350,7 +444,6 @@
       color: var(--ink-light);
     }
 
-    /* ── DECORATIVE RULE ── */
     .accent-rule {
       width: 40px;
       height: 3px;
@@ -358,21 +451,6 @@
       margin: 24px 0 0;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 720px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      .hero-pitch { max-width: 100%; }
-      .timeline-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-      .contact-links { align-items: flex-start; }
-    }
-
-    /* ── FADE IN on load ── */
     .fade-up {
       opacity: 0;
       transform: translateY(20px);
@@ -385,22 +463,52 @@
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .theme-btn { margin-left: 0; }
+      .hamburger { display: flex; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .hero-pitch { max-width: 100%; }
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .contact-links { align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- MASTHEAD -->
   <header>
     <span class="masthead-name">Dillon Plummer, PhD</span>
-    <nav>
-      <a href="#philosophy">Philosophy</a>
-      <a href="#experience">Experience</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="header-right">
+      <nav id="desktop-nav">
+        <a href="#philosophy">Philosophy</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme-btn" id="theme-toggle" aria-label="Toggle light/dark mode">
+        <svg id="theme-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
-  <!-- HERO -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <section class="hero">
     <div>
       <p class="hero-kicker fade-up">Chief of Staff · Operator · AI Strategist</p>
@@ -424,7 +532,6 @@
     </div>
   </section>
 
-  <!-- PHILOSOPHY -->
   <section class="section" id="philosophy">
     <p class="section-label">Philosophy</p>
     <p class="philosophy-text">
@@ -435,7 +542,6 @@
     </p>
   </section>
 
-  <!-- EXPERIENCE -->
   <section class="section" id="experience">
     <p class="section-label">Selected Experience</p>
     <div class="timeline">
@@ -515,38 +621,71 @@
     </div>
   </section>
 
-  <!-- SKILLS -->
   <section class="section" id="skills">
     <p class="section-label">Skills & Tools</p>
     <div class="skills-grid">
       <div class="skill-cell">
         <p class="skill-category">Operations</p>
-        <p class="skill-items">Payroll & HR<br>Vendor management<br>Inventory & logistics<br>Process documentation<br>Change management</p>
+        <ul class="skill-items">
+          <li>Payroll & HR</li>
+          <li>Vendor management</li>
+          <li>Inventory & logistics</li>
+          <li>Process documentation</li>
+          <li>Change management</li>
+        </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-category">Strategy & Analytics</p>
-        <p class="skill-items">DMAIC / Lean Six Sigma<br>KPI framework design<br>Executive reporting<br>Root cause analysis<br>Risk assessment</p>
+        <ul class="skill-items">
+          <li>DMAIC / Lean Six Sigma</li>
+          <li>KPI framework design</li>
+          <li>Executive reporting</li>
+          <li>Root cause analysis</li>
+          <li>Risk assessment</li>
+        </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-category">AI & Technology</p>
-        <p class="skill-items">ML model evaluation<br>AI governance & compliance<br>Prompt & context engineering<br>Python (data analysis)<br>Advanced Excel / dashboards</p>
+        <ul class="skill-items">
+          <li>ML model evaluation</li>
+          <li>AI governance & compliance</li>
+          <li>Prompt & context engineering</li>
+          <li>Python (data analysis)</li>
+          <li>Advanced Excel / dashboards</li>
+        </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-category">Leadership</p>
-        <p class="skill-items">Cross-functional teams<br>Executive communication<br>Recruiting & onboarding<br>Curriculum development<br>Audit management (FDA)</p>
+        <ul class="skill-items">
+          <li>Cross-functional teams</li>
+          <li>Executive communication</li>
+          <li>Recruiting & onboarding</li>
+          <li>Curriculum development</li>
+          <li>Audit management (FDA)</li>
+        </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-category">Languages</p>
-        <p class="skill-items">Spanish — professional<br>Russian — professional<br>Japanese — elementary<br>Latin & Greek — translation</p>
+        <ul class="skill-items">
+          <li>Spanish — professional</li>
+          <li>Russian — professional</li>
+          <li>Japanese — elementary</li>
+          <li>Latin & Greek — translation</li>
+        </ul>
       </div>
       <div class="skill-cell">
         <p class="skill-category">Research</p>
-        <p class="skill-items">3 peer-reviewed publications<br>AI ethics & governance<br>Sociotechnical systems<br>Statistical methodologies<br>PhD — Capitol Tech University</p>
+        <ul class="skill-items">
+          <li>3 peer-reviewed publications</li>
+          <li>AI ethics & governance</li>
+          <li>Sociotechnical systems</li>
+          <li>Statistical methodologies</li>
+          <li>PhD — Capitol Tech University</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section class="section" id="contact">
     <div class="contact-inner">
       <h2 class="contact-headline">
@@ -569,14 +708,39 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <span>Dillon Plummer, PhD — San Francisco Bay Area</span>
     <span>Available for Chief of Staff roles · 2026</span>
   </footer>
 
   <script>
-    // Scroll-triggered fade for timeline items
+    const html = document.documentElement;
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    const moonPath = 'M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z';
+    const sunPath  = 'M12 4a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1zm0 16a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-1-1zm8-8h2a1 1 0 0 0 0-2h-2a1 1 0 0 0 0 2zM4 11H2a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2zm13.66-5.24 1.41-1.42a1 1 0 1 0-1.41-1.41l-1.42 1.41a1 1 0 1 0 1.42 1.42zM6.34 17.66l-1.41 1.42a1 1 0 1 0 1.41 1.41l1.42-1.41a1 1 0 1 0-1.42-1.42zm11.32 1.42 1.41-1.42a1 1 0 1 0-1.41-1.41l-1.42 1.41a1 1 0 1 0 1.42 1.42zM6.34 6.34 4.93 4.93a1 1 0 0 0-1.41 1.41l1.41 1.42a1 1 0 1 0 1.41-1.42zM12 7a5 5 0 1 0 0 10A5 5 0 0 0 12 7z';
+
+    toggleBtn.addEventListener('click', () => {
+      const isDark = html.dataset.theme === 'dark';
+      html.dataset.theme = isDark ? 'light' : 'dark';
+      themeIcon.innerHTML = `<path fill="currentColor" d="${isDark ? sunPath : moonPath}"/>`;
+    });
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
     const items = document.querySelectorAll('.timeline-item');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
